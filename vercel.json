@@ -1,0 +1,7 @@
+{
+  "buildCommand": "echo 'Static HTML site - no build required'",
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/uncharted.html" }
+  ]
+}
