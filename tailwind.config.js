@@ -7,9 +7,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Bebas Neue"', 'sans-serif'],
-        sans: ['"DM Sans"', 'sans-serif'],
-        mono: ['"Fira Code"', 'monospace'],
+        display: ['var(--font-bebas)', 'sans-serif'],
+        sans: ['var(--font-dm-sans)', 'sans-serif'],
+        mono: ['var(--font-fira-code)', 'monospace'],
       },
       colors: {
         ut: {

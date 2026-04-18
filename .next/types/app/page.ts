@@ -1,4 +1,4 @@
-// File: C:\code-works\Whop_affiliate\final-WhopSites\Mustafa_01\new_batch\uncharted\src\app\page.jsx
+// File: C:\Users\Maxime\organized_whops_01\Uncharted-Territory\src\app\page.jsx
 import * as entry from '../../../src/app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

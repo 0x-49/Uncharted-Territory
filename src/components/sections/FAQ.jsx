@@ -8,11 +8,11 @@ const faqs = [
   },
   {
     question: 'Is there a free trial?',
-    answer: 'We offer a 7-day money-back guarantee. If you\'re not satisfied within the first week, you can request a full refund — no questions asked.',
+    answer: 'We offer a 7-day money-back guarantee. If you\'re not satisfied within the first week, you can request a full refund - no questions asked.',
   },
   {
     question: 'How quickly will I see results?',
-    answer: 'Results vary based on experience and dedication. Many members see improvements within their first month, but becoming consistently profitable takes time and practice. We provide the tools and education — you bring the commitment.',
+    answer: 'Results vary based on experience and dedication. Many members see improvements within their first month, but becoming consistently profitable takes time and practice. We provide the tools and education - you bring the commitment.',
   },
   {
     question: 'Can I cancel anytime?',
@@ -32,35 +32,35 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(null)
 
   return (
-    <section id="faq" className="py-24 md:py-32 bg-ut-deep">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="font-display text-4xl md:text-5xl text-ut-white mb-4">
+    <section id="faq" className="py-20 md:py-28">
+      <div className="max-w-2xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="font-display text-4xl md:text-5xl text-white mb-3">
             FAQ
           </h2>
-          <p className="text-lg text-ut-muted">
-            Frequently asked questions about Uncharted Territory
+          <p className="text-white/50">
+            Frequently asked questions
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-2">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="border border-ut-border rounded-xl overflow-hidden bg-ut-card"
+              className="border border-white/10 rounded-xl overflow-hidden bg-white/[0.02]"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-ut-border/30 transition-colors"
+                className="w-full px-5 py-4 flex items-center justify-between text-left hover:bg-white/5 transition-colors"
               >
-                <span className="font-medium text-ut-white">{faq.question}</span>
-                <span className={`text-ut-amber text-xl transition-transform ${openIndex === index ? 'rotate-45' : ''}`}>
+                <span className="font-medium text-white text-sm">{faq.question}</span>
+                <span className={`text-ut-amber text-lg transition-transform duration-200 ${openIndex === index ? 'rotate-45' : ''}`}>
                   +
                 </span>
               </button>
               {openIndex === index && (
-                <div className="px-6 pb-4">
-                  <p className="text-ut-muted leading-relaxed">{faq.answer}</p>
+                <div className="px-5 pb-4">
+                  <p className="text-white/50 text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               )}
             </div>

@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uncharted Territory — Where Serious Traders Come to Learn & Earn</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['"Bebas Neue"', 'sans-serif'],
+          sans: ['"DM Sans"', 'sans-serif'],
+          mono: ['"Fira Code"', 'monospace'],
+        },
+        colors: {
+          ut: {
+            bg:      '#0a0b0e',
+            deep:    '#0c0e12',
+            card:    '#10121a',
+            border:  '#1c1f2e',
+            borderl: '#252840',
+            amber:   '#f59e0b',
+            amberl:  '#fbbf24',
+            amberd:  '#d97706',
+            orange:  '#ea580c',
+            red:     '#ef4444',
+            green:   '#10b981',
+            blue:    '#3b82f6',
+            muted:   '#6b7280',
+            text:    '#c4c8d8',
+            white:   '#eef0f8',
+          }
+        },
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #0a0b0e;
+    color: #c4c8d8;
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.35;
+  }
+
+  /* Amber glow radials */
+  .glow-amber {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  /* Map / terrain diagonal lines bg */
+  .terrain-bg {
+    background-image:
+      repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(245,158,11,0.018) 40px,
+        rgba(245,158,11,0.018) 41px
+      );
+  }
+
+  /* Grid overlay */
+  .grid-overlay {
+    background-image:
+      linear-gradient(rgba(245,158,11,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,158,11,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Bebas headline */
+  .font-display { font-family: 'Bebas Neue', sans-serif; }
+  .font-mono { font-family: 'Fira Code', monospace; }
+
+  /* Pulse dot */
+  @keyframes pdot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.75); }
+  }
+  .pdot { animation: pdot 1.8s ease infinite; }
+
+  /* Ticker */
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .ticker-anim { animation: ticker 28s linear infinite; }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.vis { opacity: 1; transform: none; }
+  .rd1 { transition-delay: 0.1s; }
+  .rd2 { transition-delay: 0.2s; }
+  .rd3 { transition-delay: 0.3s; }
+
+  /* Card hover */
+  .ch {
+    transition: border-color 0.3s, transform 0.25s, box-shadow 0.3s;
+  }
+  .ch:hover {
+    border-color: rgba(245,158,11,0.35) !important;
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,158,11,0.12);
+  }
+
+  /* Amber text gradient */
+  .text-amber-grad {
+    background: linear-gradient(135deg, #fbbf24 0%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Btn glow */
+  .btn-amber:hover {
+    box-shadow: 0 0 28px rgba(245,158,11,0.45), 0 8px 20px rgba(0,0,0,0.5);
+  }
+
+  /* Line clamp */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Compass rose decorative */
+  @keyframes spin-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .spin-slow { animation: spin-slow 30s linear infinite; }
+
+  /* Float */
+  @keyframes float-y {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .float { animation: float-y 4s ease infinite; }
+  .float-d { animation: float-y 4.5s ease 0.6s infinite; }
+
+  /* Mobile menu */
+  #mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: #0c0e12;
+    border-top: 1px solid #1c1f2e;
+    padding: 20px 24px;
+    gap: 4px;
+  }
+  #mobile-menu.open { display: flex; }
+
+  #hamburger-btn { cursor: pointer; }
+
+  /* Hamburger animation */
+  #ham-line-1,
+  #ham-line-2,
+  #ham-line-3 {
+    transition: transform 0.25s, opacity 0.25s;
+    transform-origin: center;
+  }
+  .ham-open #ham-line-1 { transform: translateY(6px) rotate(45deg); }
+  .ham-open #ham-line-2 { opacity: 0; transform: scaleX(0); }
+  .ham-open #ham-line-3 { transform: translateY(-6px) rotate(-45deg); }
+</style>
+</head>
+
+<body class="bg-[#0a0b0e]">
+
+<!-- ─── NAV ─────────────────────────────────────── -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-[rgba(10,11,14,0.90)] backdrop-blur-2xl border-b border-[#1c1f2e]">
+  <!-- Top bar -->
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-3 no-underline flex-shrink-0">
+      <div class="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center flex-shrink-0">
+        <svg class="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+        </svg>
+      </div>
+      <div>
+        <div class="font-display text-[#eef0f8] tracking-widest text-lg leading-none">UNCHARTED</div>
+        <div class="font-mono text-[9px] text-amber-500 tracking-[0.2em] uppercase leading-none mt-0.5">Territory</div>
+      </div>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="hidden lg:flex items-center gap-7 list-none">
+      <li><a href="#features" class="text-[#6b7280] text-sm font-medium hover:text-amber-400 transition-colors no-underline">Features</a></li>
+      <li><a href="#team" class="text-[#6b7280] text-sm font-medium hover:text-amber-400 transition-colors no-underline">The Team</a></li>
+      <li><a href="#results" class="text-[#6b7280] text-sm font-medium hover:text-amber-400 transition-colors no-underline">Results</a></li>
+      <li><a href="#reviews" class="text-[#6b7280] text-sm font-medium hover:text-amber-400 transition-colors no-underline">Reviews</a></li>
+      <li><a href="#pricing" class="text-[#6b7280] text-sm font-medium hover:text-amber-400 transition-colors no-underline">Pricing</a></li>
+      <li><a href="#faq" class="text-[#6b7280] text-sm font-medium hover:text-amber-400 transition-colors no-underline">FAQ</a></li>
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <!-- Desktop CTA -->
+      <a href="https://whop.com/uncharted/uncharted?a=digitalartlab"
+         class="hidden lg:inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm px-5 py-2.5 rounded-lg transition-all btn-amber no-underline">
+        Join Now — $79.99
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+      </a>
+
+      <!-- Hamburger (mobile only) -->
+      <button id="hamburger-btn" class="lg:hidden flex flex-col gap-1.5 p-1.5 rounded-lg hover:bg-[#1c1f2e] transition-colors" aria-label="Toggle menu" aria-expanded="false">
+        <span id="ham-line-1" class="block w-6 h-0.5 bg-[#eef0f8] rounded-full"></span>
+        <span id="ham-line-2" class="block w-6 h-0.5 bg-[#eef0f8] rounded-full"></span>
+        <span id="ham-line-3" class="block w-6 h-0.5 bg-[#eef0f8] rounded-full"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+    <a href="#features" class="mobile-link text-[#c4c8d8] hover:text-amber-400 text-sm font-semibold py-3 px-2 rounded-lg hover:bg-[#1c1f2e] transition-colors no-underline">
+      📊 Features
+    </a>
+    <a href="#team" class="mobile-link text-[#c4c8d8] hover:text-amber-400 text-sm font-semibold py-3 px-2 rounded-lg hover:bg-[#1c1f2e] transition-colors no-underline">
+      👥 The Team
+    </a>
+    <a href="#results" class="mobile-link text-[#c4c8d8] hover:text-amber-400 text-sm font-semibold py-3 px-2 rounded-lg hover:bg-[#1c1f2e] transition-colors no-underline">
+      📈 Results
+    </a>
+    <a href="#reviews" class="mobile-link text-[#c4c8d8] hover:text-amber-400 text-sm font-semibold py-3 px-2 rounded-lg hover:bg-[#1c1f2e] transition-colors no-underline">
+      ⭐ Reviews
+    </a>
+    <a href="#pricing" class="mobile-link text-[#c4c8d8] hover:text-amber-400 text-sm font-semibold py-3 px-2 rounded-lg hover:bg-[#1c1f2e] transition-colors no-underline">
+      💰 Pricing
+    </a>
+    <a href="#faq" class="mobile-link text-[#c4c8d8] hover:text-amber-400 text-sm font-semibold py-3 px-2 rounded-lg hover:bg-[#1c1f2e] transition-colors no-underline">
+      ❓ FAQ
+    </a>
+    <div class="border-t border-[#1c1f2e] pt-4 mt-2">
+      <a href="https://whop.com/uncharted/uncharted?a=digitalartlab"
+         class="block text-center bg-amber-500 hover:bg-amber-400 text-black font-bold text-sm px-5 py-3.5 rounded-xl transition-all no-underline btn-amber">
+        Join Uncharted — $79.99 / 28 days
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────── -->
+<section class="relative min-h-screen flex flex-col justify-center overflow-hidden pt-24 pb-16">
+  <!-- BG layers -->
+  <div class="absolute inset-0 terrain-bg"></div>
+  <div class="absolute inset-0 grid-overlay" style="mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 30%, transparent 100%);"></div>
+  <div class="absolute inset-0">
+    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1800&q=80&auto=format&fit=crop"
+         alt="" class="w-full h-full object-cover" style="opacity: 0.04; filter: saturate(0);">
+  </div>
+  <div class="glow-amber w-[800px] h-[600px] top-[-100px] left-1/2 -translate-x-1/2"></div>
+  <div class="glow-amber w-[400px] h-[400px] bottom-0 right-0" style="background: radial-gradient(circle, rgba(234,88,12,0.07) 0%, transparent 65%);"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0b0e]"></div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- Left -->
+      <div>
+        <!-- Live badge -->
+        <div class="inline-flex items-center gap-2.5 bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.22)] rounded-full px-4 py-2 mb-8">
+          <span class="w-2 h-2 rounded-full bg-amber-400 pdot flex-shrink-0"></span>
+          <span class="font-mono text-xs text-amber-400 tracking-widest uppercase">Live Daily · Bracco & TSDR · Multi-Strategy</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="font-display text-[#eef0f8] leading-none tracking-wider mb-4"
+            style="font-size: clamp(4rem, 10vw, 8.5rem);">
+          UNCHARTED
+        </h1>
+        <h1 class="font-display leading-none tracking-wider mb-6 text-amber-grad"
+            style="font-size: clamp(4rem, 10vw, 8.5rem);">
+          TERRITORY
+        </h1>
+
+        <p class="text-[#6b7280] text-base lg:text-lg leading-relaxed mb-8 max-w-lg">
+          A Discord trading community built by <strong class="text-[#c4c8d8] font-semibold">Bracco and TSDR</strong> — two obsessive traders who dedicated their careers to mastering the markets. Daily live sessions, pre-market Zoom, real-time alerts, and nightly workshops.
+          <span class="text-amber-400 font-semibold"> Come here to learn. Stay here to earn.</span>
+        </p>
+
+        <div class="flex flex-wrap gap-3 mb-10">
+          <a href="https://whop.com/uncharted/uncharted?a=digitalartlab"
+             class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold text-base px-7 py-3.5 rounded-xl transition-all btn-amber no-underline">
+            🗺️ Join the Territory — $79.99
+          </a>
+          <a href="#features"
+             class="inline-flex items-center gap-2 bg-transparent hover:bg-[rgba(255,255,255,0.04)] text-[#eef0f8] font-semibold text-base px-7 py-3.5 rounded-xl border border-[#1c1f2e] hover:border-[#252840] transition-all no-underline">
+            What's Inside ↓
+          </a>
+        </div>
+
+        <!-- Trust stats inline -->
+        <div class="flex flex-wrap items-center gap-5 text-sm text-[#6b7280]">
+          <div class="flex items-center gap-1.5">
+            <span class="text-amber-400">★★★★★</span>
+            <span class="text-[#c4c8d8] font-semibold">Top-rated on Whop</span>
+          </div>
+          <span class="w-px h-4 bg-[#1c1f2e]"></span>
+          <span><strong class="text-[#c4c8d8]">3,300+</strong> subscribers</span>
+          <span class="w-px h-4 bg-[#1c1f2e]"></span>
+          <span>Daily since <strong class="text-[#c4c8d8]">2022</strong></span>
+          <span class="w-px h-4 bg-[#1c1f2e]"></span>
+          <span><strong class="text-[#c4c8d8]">6</strong> expert traders</span>
+        </div>
+      </div>
+
+      <!-- Right — decorative card cluster -->
+      <div class="hidden lg:flex justify-end items-center relative h-[520px]">
+        <!-- Compass ring decoration -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div class="w-80 h-80 border border-[rgba(245,158,11,0.06)] rounded-full spin-slow"></div>
+          <div class="absolute w-60 h-60 border border-[rgba(245,158,11,0.04)] rounded-full" style="animation: spin-slow 20s linear reverse infinite;"></div>
+        </div>
+
+        <!-- Main chart card -->
+        <div class="absolute right-0 top-8 w-80 bg-[#10121a] border border-[#1c1f2e] rounded-2xl overflow-hidden float">
+          <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=700&q=80&auto=format&fit=crop"
+               alt="" class="w-full h-44 object-cover" style="filter: saturate(0.2) brightness(0.55);">
+          <div class="p-5 border-t border-[#1c1f2e]">
+            <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-1.5">TSDR · Swing Trade</div>
+            <div class="text-[#eef0f8] font-bold text-base">IWM Long · $42 → $50</div>
+            <div class="font-mono text-xs text-emerald-400 mt-1">+19.5% · 10:1 RR closed</div>
+          </div>
+        </div>
+
+        <!-- Alert card -->
+        <div class="absolute left-0 top-24 w-56 bg-[#10121a] border border-[rgba(245,158,11,0.25)] rounded-xl p-4 float-d">
+          <div class="font-mono text-[10px] text-amber-400 uppercase tracking-widest mb-2">Live Alert</div>
+          <div class="text-[#eef0f8] font-bold text-sm mb-1">QQQ Pre-Market Level</div>
+          <div class="text-xs text-[#6b7280]">Watch $440 as resistance. Plan shared in Zoom session.</div>
+          <div class="flex items-center gap-1.5 mt-2.5">
+            <div class="w-1.5 h-1.5 rounded-full bg-amber-400 pdot"></div>
+            <span class="font-mono text-[10px] text-amber-400">9:25 AM · Today</span>
+          </div>
+        </div>
+
+        <!-- Win card -->
+        <div class="absolute left-10 bottom-8 w-52 bg-[#10121a] border border-[rgba(16,185,129,0.2)] rounded-xl p-4 float" style="animation-delay: 1.5s;">
+          <div class="font-mono text-[10px] text-emerald-400 uppercase tracking-widest mb-1.5">Member Win</div>
+          <div class="font-display text-3xl text-emerald-400 tracking-wider">+$8,400</div>
+          <div class="text-xs text-[#6b7280] mt-1">Following TSDR's swing idea</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-[#1c1f2e] rounded-2xl overflow-hidden mt-20 reveal">
+      <div class="bg-[#10121a] py-8 px-8 text-center hover:bg-[#12141e] transition-colors">
+        <div class="font-display text-4xl lg:text-5xl text-[#eef0f8] tracking-wider mb-2" style="text-shadow: 0 0 24px rgba(245,158,11,0.3);">3300<span class="text-amber-500 text-2xl">+</span></div>
+        <div class="font-mono text-xs text-[#6b7280] uppercase tracking-widest">Substack Subscribers</div>
+      </div>
+      <div class="bg-[#10121a] py-8 px-8 text-center hover:bg-[#12141e] transition-colors">
+        <div class="font-display text-4xl lg:text-5xl text-[#eef0f8] tracking-wider mb-2" style="text-shadow: 0 0 24px rgba(245,158,11,0.3);">6<span class="text-amber-500 text-2xl">+</span></div>
+        <div class="font-mono text-xs text-[#6b7280] uppercase tracking-widest">Expert Traders</div>
+      </div>
+      <div class="bg-[#10121a] py-8 px-8 text-center hover:bg-[#12141e] transition-colors">
+        <div class="font-display text-4xl lg:text-5xl text-[#eef0f8] tracking-wider mb-2" style="text-shadow: 0 0 24px rgba(245,158,11,0.3);"><span class="text-amber-500 text-2xl">★</span>5.0</div>
+        <div class="font-mono text-xs text-[#6b7280] uppercase tracking-widest">Whop Rating</div>
+      </div>
+      <div class="bg-[#10121a] py-8 px-8 text-center hover:bg-[#12141e] transition-colors">
+        <div class="font-display text-4xl lg:text-5xl text-[#eef0f8] tracking-wider mb-2" style="text-shadow: 0 0 24px rgba(245,158,11,0.3);">Daily</div>
+        <div class="font-mono text-xs text-[#6b7280] uppercase tracking-widest">Live Since 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TICKER ─────────────────────────────────────── -->
+<div class="bg-[#0c0e12] border-y border-[#1c1f2e] py-3 overflow-hidden">
+  <div class="ticker-anim flex gap-10 w-max items-center">
+    <div class="flex items-center gap-8 font-mono text-xs text-[#6b7280] whitespace-nowrap">
+      <span>🗺️ <span class="text-amber-400 font-semibold">UNCHARTED TERRITORY</span></span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>📊 Daily Pre-Market Zoom · Every Trading Day</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>🐂 <span class="text-amber-400">TSDR</span> Swing Ideas · Stocks, ETFs, Indices</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>💡 <span class="text-amber-400">Bracco</span> Day Trading · Live Entries & Exits</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>🔔 Real-Time Alerts · Entry · Exit · Stop</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>🌙 Nightly Workshops · After-Market Hours</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>🗺️ Use code <span class="text-amber-300 font-semibold">SUBSTACK</span> for 15% off</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>📅 Sunday Weekly Scan Every Week</span>
+      <span class="text-[#1c1f2e]">◆</span>
+    </div>
+    <div class="flex items-center gap-8 font-mono text-xs text-[#6b7280] whitespace-nowrap">
+      <span>🗺️ <span class="text-amber-400 font-semibold">UNCHARTED TERRITORY</span></span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>📊 Daily Pre-Market Zoom · Every Trading Day</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>🐂 <span class="text-amber-400">TSDR</span> Swing Ideas · Stocks, ETFs, Indices</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>💡 <span class="text-amber-400">Bracco</span> Day Trading · Live Entries & Exits</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>🔔 Real-Time Alerts · Entry · Exit · Stop</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>🌙 Nightly Workshops · After-Market Hours</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>🗺️ Use code <span class="text-amber-300 font-semibold">SUBSTACK</span> for 15% off</span>
+      <span class="text-[#1c1f2e]">◆</span>
+      <span>📅 Sunday Weekly Scan Every Week</span>
+      <span class="text-[#1c1f2e]">◆</span>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PAIN / WHY SECTION ──────────────────────── -->
+<section class="py-28 border-b border-[#1c1f2e] bg-[#0c0e12]">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2 bg-[rgba(239,68,68,0.07)] border border-[rgba(239,68,68,0.18)] rounded-full px-4 py-2 mb-8">
+          <span class="w-1.5 h-1.5 rounded-full bg-red-500 pdot"></span>
+          <span class="font-mono text-xs text-red-400 tracking-widest uppercase">The Problem</span>
+        </div>
+        <h2 class="font-display text-[#eef0f8] leading-none tracking-wider mb-5"
+            style="font-size: clamp(2.5rem, 5vw, 4.5rem);">
+          TRADING ALONE<br>
+          <span class="text-amber-grad">IS LOSING ALONE</span>
+        </h2>
+        <p class="text-[#6b7280] text-base leading-relaxed mb-8 max-w-lg">
+          Most traders bounce between YouTube videos, Reddit threads, and Telegram groups that send random signals. None of it builds a real edge. Uncharted Territory is different — it's structured, it's educational, and it's run by real traders who actually show their work every day.
+        </p>
+
+        <div class="space-y-4">
+          <div class="flex gap-4 p-4 rounded-xl bg-[rgba(239,68,68,0.04)] border border-[rgba(239,68,68,0.1)] items-start">
+            <div class="w-9 h-9 rounded-lg bg-[rgba(239,68,68,0.1)] flex items-center justify-center flex-shrink-0 text-base">❌</div>
+            <div>
+              <div class="font-semibold text-[#c4c8d8] text-sm mb-1">Random signals with no explanation</div>
+              <div class="text-xs text-[#6b7280] leading-relaxed">You enter, you don't know why. You exit, you don't know why. You learn nothing. Bracco and TSDR show their full process — live, every session.</div>
+            </div>
+          </div>
+          <div class="flex gap-4 p-4 rounded-xl bg-[rgba(239,68,68,0.04)] border border-[rgba(239,68,68,0.1)] items-start">
+            <div class="w-9 h-9 rounded-lg bg-[rgba(239,68,68,0.1)] flex items-center justify-center flex-shrink-0 text-base">❌</div>
+            <div>
+              <div class="font-semibold text-[#c4c8d8] text-sm mb-1">No pre-market preparation</div>
+              <div class="text-xs text-[#6b7280] leading-relaxed">Walking into the open blind is how accounts get destroyed. We start every day with a pre-market Zoom — levels, ideas, and the team's watchlist before the bell.</div>
+            </div>
+          </div>
+          <div class="flex gap-4 p-4 rounded-xl bg-[rgba(239,68,68,0.04)] border border-[rgba(239,68,68,0.1)] items-start">
+            <div class="w-9 h-9 rounded-lg bg-[rgba(239,68,68,0.1)] flex items-center justify-center flex-shrink-0 text-base">❌</div>
+            <div>
+              <div class="font-semibold text-[#c4c8d8] text-sm mb-1">One style, one strategy</div>
+              <div class="text-xs text-[#6b7280] leading-relaxed">Most groups have one trader and one style. UT has six experts — day traders, swing traders, scalpers — so you can find what fits your personality and schedule.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right image -->
+      <div class="reveal rd1">
+        <div class="rounded-2xl overflow-hidden border border-[#1c1f2e]">
+          <img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=900&q=80&auto=format&fit=crop"
+               alt="" class="w-full h-72 object-cover" style="filter: saturate(0.25) brightness(0.6);">
+          <div class="bg-[#10121a] p-6 border-t border-[#1c1f2e]">
+            <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-2">Inside Uncharted Territory</div>
+            <div class="text-[#c4c8d8] font-semibold text-sm leading-relaxed">"Pre-market update, live Zoom call, and a lot of teaching every day. After-market hour workshops. Sunday weekly scan. This group is 100% useful for serious traders."</div>
+            <div class="text-xs text-[#6b7280] mt-2">— Verified Whop Member</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ────────────────────────────────── -->
+<section class="py-28 border-b border-[#1c1f2e]" id="features">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center mb-16 reveal">
+      <div class="inline-flex items-center gap-2 bg-[rgba(245,158,11,0.07)] border border-[rgba(245,158,11,0.18)] rounded-full px-4 py-2 mb-6">
+        <span class="font-mono text-xs text-amber-400 tracking-widest uppercase">Full Access · Everything Included</span>
+      </div>
+      <h2 class="font-display text-[#eef0f8] tracking-wider mb-4"
+          style="font-size: clamp(2.5rem, 5vw, 4.5rem);">WHAT YOU GET</h2>
+      <p class="text-[#6b7280] text-lg max-w-xl mx-auto">One membership. Every resource. Six experienced traders dedicated to making you better — every single trading day.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-7 ch reveal">
+        <div class="w-12 h-12 rounded-xl bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.15)] flex items-center justify-center text-xl mb-5">🌅</div>
+        <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">01</div>
+        <h3 class="font-display text-[#eef0f8] text-2xl tracking-wider mb-3">PRE-MARKET ZOOM</h3>
+        <p class="text-[#6b7280] text-sm leading-relaxed">Every single trading day begins with a live Zoom session. Bracco, TSDR, and the team share pre-market levels, charts, ideas, and the plan before the market opens. You walk in prepared, not scrambling.</p>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-7 ch reveal rd1">
+        <div class="w-12 h-12 rounded-xl bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.15)] flex items-center justify-center text-xl mb-5">🔔</div>
+        <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">02</div>
+        <h3 class="font-display text-[#eef0f8] text-2xl tracking-wider mb-3">REAL-TIME ALERTS</h3>
+        <p class="text-[#6b7280] text-sm leading-relaxed">Live Discord alerts for entries, exits, and stop-loss levels. Not just "buy NVDA" — full context, full reasoning, full transparency. TSDR's swing setups. Bracco's day trades. All in real time.</p>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-7 ch reveal rd2">
+        <div class="w-12 h-12 rounded-xl bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.15)] flex items-center justify-center text-xl mb-5">🌙</div>
+        <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">03</div>
+        <h3 class="font-display text-[#eef0f8] text-2xl tracking-wider mb-3">NIGHTLY WORKSHOPS</h3>
+        <p class="text-[#6b7280] text-sm leading-relaxed">After-market educational workshops multiple times per week. Deep-dive sessions on strategy, setups, risk management, and market structure. The curriculum evolves with the market — not pre-recorded and stale.</p>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-7 ch reveal">
+        <div class="w-12 h-12 rounded-xl bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.15)] flex items-center justify-center text-xl mb-5">📅</div>
+        <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">04</div>
+        <h3 class="font-display text-[#eef0f8] text-2xl tracking-wider mb-3">SUNDAY WEEKLY SCAN</h3>
+        <p class="text-[#6b7280] text-sm leading-relaxed">Bracco's detailed Sunday scan — full market breakdown, top watchlist stocks, sector analysis, and the team's best ideas going into the new week. Walk into Monday knowing exactly what you're watching.</p>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-7 ch reveal rd1">
+        <div class="w-12 h-12 rounded-xl bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.15)] flex items-center justify-center text-xl mb-5">🧪</div>
+        <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">05</div>
+        <h3 class="font-display text-[#eef0f8] text-2xl tracking-wider mb-3">DEEPVUE PARTNERSHIP</h3>
+        <p class="text-[#6b7280] text-sm leading-relaxed">Every member now gets Deepvue Charting AND Deepvue Terminal AI included in the membership cost. Professional charting tools and an AI stock market assistant — for the same $79.99 you're already paying.</p>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-7 ch reveal rd2">
+        <div class="w-12 h-12 rounded-xl bg-[rgba(245,158,11,0.1)] border border-[rgba(245,158,11,0.15)] flex items-center justify-center text-xl mb-5">👥</div>
+        <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">06</div>
+        <h3 class="font-display text-[#eef0f8] text-2xl tracking-wider mb-3">6-TRADER TEAM</h3>
+        <p class="text-[#6b7280] text-sm leading-relaxed">TSDR, Bracco, Patrick, Manrav, 1ChartMaster, AJIA, and Jersace each bring a unique style. Different strategies, different timeframes, different markets — so you always have a setup that fits your approach.</p>
+      </div>
+
+      <!-- Wide feature card -->
+      <div class="md:col-span-2 lg:col-span-3 bg-gradient-to-br from-[rgba(245,158,11,0.06)] to-[rgba(234,88,12,0.04)] border border-[rgba(245,158,11,0.14)] rounded-2xl p-7 ch reveal">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+          <div class="md:col-span-2">
+            <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">07 — Deepvue Bundle</div>
+            <h3 class="font-display text-[#eef0f8] text-3xl tracking-wider mb-3">PROFESSIONAL AI TOOLS — INCLUDED FREE</h3>
+            <p class="text-[#6b7280] text-sm leading-relaxed max-w-2xl">Through the Deepvue partnership, every Uncharted Territory member gets access to Deepvue Charting and Deepvue Terminal AI — a personal stock market AI assistant. This means for the price of the Discord alone, you now receive professional charting, AI analysis, and access to all six trader channels. No extra charge.</p>
+          </div>
+          <div class="text-center">
+            <div class="font-display text-[#eef0f8] tracking-wider text-amber-grad" style="font-size: 4.5rem; line-height: 1;">+AI</div>
+            <div class="font-mono text-xs text-[#6b7280] uppercase tracking-widest mt-2">Deepvue Terminal Included</div>
+            <div class="font-mono text-xs text-amber-400 mt-1">No Extra Cost</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TEAM SECTION ────────────────────────────── -->
+<section class="py-28 border-b border-[#1c1f2e] bg-[#0c0e12]" id="team">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center mb-16 reveal">
+      <div class="inline-flex items-center gap-2 bg-[rgba(245,158,11,0.07)] border border-[rgba(245,158,11,0.18)] rounded-full px-4 py-2 mb-6">
+        <span class="font-mono text-xs text-amber-400 tracking-widest uppercase">The Team</span>
+      </div>
+      <h2 class="font-display text-[#eef0f8] tracking-wider mb-4"
+          style="font-size: clamp(2.5rem, 5vw, 4.5rem);">BUILT BY OBSESSIVE TRADERS</h2>
+      <p class="text-[#6b7280] text-lg max-w-2xl mx-auto">Founded by Bracco and TSDR — two traders who dedicated their careers to understanding the markets. They assembled a team of six specialists, each with a distinct edge and style.</p>
+    </div>
+
+    <!-- Founders spotlight -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+      <!-- Bracco -->
+      <div class="bg-[#10121a] border border-[rgba(245,158,11,0.18)] rounded-2xl overflow-hidden ch reveal">
+        <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=900&q=80&auto=format&fit=crop"
+             alt="" class="w-full h-52 object-cover" style="filter: saturate(0.2) brightness(0.55);">
+        <div class="p-7">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="font-display text-[#eef0f8] text-3xl tracking-wider">BRACCO</div>
+              <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mt-1">Co-Founder · Day Trader</div>
+            </div>
+            <div class="bg-amber-500 text-black text-xs font-bold px-3 py-1.5 rounded-lg">FOUNDER</div>
+          </div>
+          <p class="text-[#6b7280] text-sm leading-relaxed mb-5">Bracco is a full-time day trader and one half of the team that built Uncharted Territory. He runs the pre-market Zoom session every morning, shares live trade ideas throughout the day, and delivers the Sunday weekly scan every week without fail. His style focuses on reading market internals and index behavior to position for high-probability intraday moves.</p>
+          <div class="flex gap-4 flex-wrap">
+            <div class="text-center">
+              <div class="font-mono font-bold text-[#eef0f8] text-base">Daily</div>
+              <div class="font-mono text-[10px] text-[#6b7280] uppercase tracking-widest">Pre-market Zoom</div>
+            </div>
+            <div class="w-px h-10 bg-[#1c1f2e]"></div>
+            <div class="text-center">
+              <div class="font-mono font-bold text-[#eef0f8] text-base">Sunday</div>
+              <div class="font-mono text-[10px] text-[#6b7280] uppercase tracking-widest">Weekly Scan</div>
+            </div>
+            <div class="w-px h-10 bg-[#1c1f2e]"></div>
+            <div class="text-center">
+              <div class="font-mono font-bold text-[#eef0f8] text-base">Live</div>
+              <div class="font-mono text-[10px] text-[#6b7280] uppercase tracking-widest">Entries & Exits</div>
+            </div>
+          </div>
+          <a href="https://x.com/Braczyy" class="inline-flex items-center gap-2 mt-5 text-xs font-mono text-amber-400 hover:text-amber-300 transition-colors no-underline">
+            𝕏 @Braczyy →
+          </a>
+        </div>
+      </div>
+
+      <!-- TSDR -->
+      <div class="bg-[#10121a] border border-[rgba(245,158,11,0.18)] rounded-2xl overflow-hidden ch reveal rd1">
+        <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=80&auto=format&fit=crop"
+             alt="" class="w-full h-52 object-cover" style="filter: saturate(0.2) brightness(0.55);">
+        <div class="p-7">
+          <div class="flex items-start justify-between mb-4">
+            <div>
+              <div class="font-display text-[#eef0f8] text-3xl tracking-wider">TSDR</div>
+              <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mt-1">Co-Founder · Swing Trader</div>
+            </div>
+            <div class="bg-amber-500 text-black text-xs font-bold px-3 py-1.5 rounded-lg">FOUNDER</div>
+          </div>
+          <p class="text-[#6b7280] text-sm leading-relaxed mb-5">TSDR is the swing trading brain behind Uncharted Territory. His strategies — shared openly inside the Discord — have been called "amazing" by members who follow his setups. He focuses on stocks, ETFs, and indices, looking for high-conviction multi-day trades with defined risk. Members credit his swing setups with some of their biggest winning years.</p>
+          <div class="flex gap-4 flex-wrap">
+            <div class="text-center">
+              <div class="font-mono font-bold text-[#eef0f8] text-base">Stocks</div>
+              <div class="font-mono text-[10px] text-[#6b7280] uppercase tracking-widest">ETFs & Indices</div>
+            </div>
+            <div class="w-px h-10 bg-[#1c1f2e]"></div>
+            <div class="text-center">
+              <div class="font-mono font-bold text-[#eef0f8] text-base">Swing</div>
+              <div class="font-mono text-[10px] text-[#6b7280] uppercase tracking-widest">Multi-Day Trades</div>
+            </div>
+            <div class="w-px h-10 bg-[#1c1f2e]"></div>
+            <div class="text-center">
+              <div class="font-mono font-bold text-[#eef0f8] text-base">High</div>
+              <div class="font-mono text-[10px] text-[#6b7280] uppercase tracking-widest">Conviction Only</div>
+            </div>
+          </div>
+          <a href="https://x.com/TSDR_Trading" class="inline-flex items-center gap-2 mt-5 text-xs font-mono text-amber-400 hover:text-amber-300 transition-colors no-underline">
+            𝕏 @TSDR_Trading →
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rest of team -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-xl p-5 ch reveal">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 to-orange-600 flex items-center justify-center text-white font-bold text-sm mb-3 font-display tracking-wider">P</div>
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider">PATRICK</div>
+        <div class="font-mono text-xs text-amber-400 mt-0.5 mb-2">Contributor</div>
+        <div class="text-xs text-[#6b7280] leading-relaxed">Multi-style analyst. Praised by members for one of the best earning years of their trading lives.</div>
+      </div>
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-xl p-5 ch reveal rd1">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-600 flex items-center justify-center text-white font-bold text-sm mb-3 font-display tracking-wider">M</div>
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider">MANRAV</div>
+        <div class="font-mono text-xs text-amber-400 mt-0.5 mb-2">Contributor</div>
+        <div class="text-xs text-[#6b7280] leading-relaxed">Technical analyst contributing ideas, charts, and setups to the daily community flow.</div>
+      </div>
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-xl p-5 ch reveal rd2">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-600 flex items-center justify-center text-white font-bold text-sm mb-3 font-display tracking-wider">C</div>
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider">1CHARTMASTER</div>
+        <div class="font-mono text-xs text-amber-400 mt-0.5 mb-2">Contributor</div>
+        <div class="text-xs text-[#6b7280] leading-relaxed">Chart specialist known for clean, precise setups and level-based trade planning.</div>
+      </div>
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-xl p-5 ch reveal rd3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-violet-600 flex items-center justify-center text-white font-bold text-sm mb-3 font-display tracking-wider">J</div>
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider">JERSACE</div>
+        <div class="font-mono text-xs text-amber-400 mt-0.5 mb-2">Contributor</div>
+        <div class="text-xs text-[#6b7280] leading-relaxed">Active trader and community contributor bringing additional perspective and trade ideas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESULTS / WHAT'S INSIDE ─────────────────── -->
+<section class="py-28 border-b border-[#1c1f2e]" id="results">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="text-center mb-16 reveal">
+      <div class="inline-flex items-center gap-2 bg-[rgba(245,158,11,0.07)] border border-[rgba(245,158,11,0.18)] rounded-full px-4 py-2 mb-6">
+        <span class="font-mono text-xs text-amber-400 tracking-widest uppercase">Inside the Discord</span>
+      </div>
+      <h2 class="font-display text-[#eef0f8] tracking-wider mb-4"
+          style="font-size: clamp(2.5rem, 5vw, 4.5rem);">DAILY SCHEDULE</h2>
+      <p class="text-[#6b7280] text-lg max-w-xl mx-auto">What a full trading day looks like inside Uncharted Territory — from pre-market to after-hours.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
+      <!-- Schedule timeline -->
+      <div class="space-y-0 reveal">
+        <div class="flex gap-4 items-start pb-6 border-b border-[#1c1f2e]">
+          <div class="w-24 flex-shrink-0 font-mono text-xs text-amber-400 pt-1">PRE-MARKET</div>
+          <div class="flex-1">
+            <div class="font-display text-[#eef0f8] text-xl tracking-wider mb-1">MORNING ZOOM SESSION</div>
+            <div class="text-sm text-[#6b7280] leading-relaxed">Bracco and TSDR lead a live Zoom covering key levels, sector analysis, indices, and the full team's watchlist. The exact stocks and setups to watch — before the bell rings.</div>
+          </div>
+        </div>
+        <div class="flex gap-4 items-start py-6 border-b border-[#1c1f2e]">
+          <div class="w-24 flex-shrink-0 font-mono text-xs text-amber-400 pt-1">9:30 AM+</div>
+          <div class="flex-1">
+            <div class="font-display text-[#eef0f8] text-xl tracking-wider mb-1">LIVE TRADING & ALERTS</div>
+            <div class="text-sm text-[#6b7280] leading-relaxed">Real-time Discord alerts for every trade — entry, stop, target, and reasoning. Multiple traders posting simultaneously across swing, day, and scalp timeframes.</div>
+          </div>
+        </div>
+        <div class="flex gap-4 items-start py-6 border-b border-[#1c1f2e]">
+          <div class="w-24 flex-shrink-0 font-mono text-xs text-amber-400 pt-1">POST-MARKET</div>
+          <div class="flex-1">
+            <div class="font-display text-[#eef0f8] text-xl tracking-wider mb-1">TRADE REVIEWS & Q&A</div>
+            <div class="text-sm text-[#6b7280] leading-relaxed">The team reviews the day's trades, discusses what worked, and answers community questions. You learn from both the wins and the losses — full transparency.</div>
+          </div>
+        </div>
+        <div class="flex gap-4 items-start py-6 border-b border-[#1c1f2e]">
+          <div class="w-24 flex-shrink-0 font-mono text-xs text-amber-400 pt-1">EVENINGS</div>
+          <div class="flex-1">
+            <div class="font-display text-[#eef0f8] text-xl tracking-wider mb-1">EDUCATIONAL WORKSHOPS</div>
+            <div class="text-sm text-[#6b7280] leading-relaxed">Multiple workshops per week covering strategies, setups, market structure, psychology, and risk management. Not YouTube surface-level — actual curriculum from working traders.</div>
+          </div>
+        </div>
+        <div class="flex gap-4 items-start pt-6">
+          <div class="w-24 flex-shrink-0 font-mono text-xs text-amber-400 pt-1">SUNDAY</div>
+          <div class="flex-1">
+            <div class="font-display text-[#eef0f8] text-xl tracking-wider mb-1">WEEKLY SCAN & OUTLOOK</div>
+            <div class="text-sm text-[#6b7280] leading-relaxed">Bracco's full Sunday scan every week — market breadth, index analysis, top stock ideas, and a complete watchlist for the week ahead. Walk into Monday prepared.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts images column -->
+      <div class="space-y-4 reveal rd1">
+        <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=800&q=80&auto=format&fit=crop"
+               alt="" class="w-full h-48 object-cover" style="filter: saturate(0.25) brightness(0.55);">
+          <div class="p-5 border-t border-[#1c1f2e]">
+            <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-1.5">TSDR · Swing Trade</div>
+            <div class="text-[#c4c8d8] font-semibold text-sm">"TNA grabbed at $43.40 on Monday. Sold at $48 and $50 — 7:1 and 10:1 risk-reward."</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-[#10121a] border border-[#1c1f2e] rounded-xl p-5">
+            <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-2">Multi-Strategy</div>
+            <div class="font-display text-[#eef0f8] text-2xl tracking-wider">6 STYLES</div>
+            <div class="text-xs text-[#6b7280] mt-1">Day · Swing · Scalp · Options</div>
+          </div>
+          <div class="bg-[#10121a] border border-[rgba(16,185,129,0.2)] rounded-xl p-5">
+            <div class="font-mono text-xs text-emerald-400 uppercase tracking-widest mb-2">Deepvue Included</div>
+            <div class="font-display text-[#eef0f8] text-2xl tracking-wider">FREE AI</div>
+            <div class="text-xs text-[#6b7280] mt-1">Charting + Terminal AI</div>
+          </div>
+        </div>
+        <div class="bg-gradient-to-br from-[rgba(245,158,11,0.07)] to-[rgba(234,88,12,0.04)] border border-[rgba(245,158,11,0.15)] rounded-xl p-6">
+          <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-2">Promo Code</div>
+          <div class="font-display text-[#eef0f8] text-3xl tracking-wider mb-1">SUBSTACK</div>
+          <div class="text-sm text-[#6b7280]">Use at checkout on Whop for <strong class="text-amber-400">15% off forever</strong> — exclusive discount from the Substack newsletter.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ────────────────────────────── -->
+<section class="py-28 border-b border-[#1c1f2e] bg-[#0c0e12]" id="reviews">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-8 mb-14">
+      <div class="reveal">
+        <div class="inline-flex items-center gap-2 bg-[rgba(245,158,11,0.07)] border border-[rgba(245,158,11,0.18)] rounded-full px-4 py-2 mb-6">
+          <span class="font-mono text-xs text-amber-400 tracking-widest uppercase">Verified Reviews</span>
+        </div>
+        <h2 class="font-display text-[#eef0f8] tracking-wider"
+            style="font-size: clamp(2.5rem, 5vw, 4rem);">WHAT MEMBERS SAY</h2>
+      </div>
+      <div class="reveal bg-[#10121a] border border-[rgba(245,158,11,0.18)] rounded-2xl px-8 py-5 flex gap-8 items-center flex-shrink-0">
+        <div class="text-center">
+          <div class="font-display text-5xl text-[#eef0f8] tracking-wider" style="text-shadow: 0 0 20px rgba(245,158,11,0.3);">5.0</div>
+          <div class="text-amber-400 text-base mt-1">★★★★★</div>
+        </div>
+        <div class="w-px h-12 bg-[#1c1f2e]"></div>
+        <div>
+          <div class="font-mono text-xs text-[#6b7280] uppercase tracking-widest">Whop Verified</div>
+          <div class="text-[#c4c8d8] font-semibold text-sm mt-0.5">Top-Rated Community</div>
+          <div class="text-amber-400 font-mono text-xs mt-1">Daily since 2022</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+      <!-- Featured -->
+      <div class="md:col-span-2 bg-[#10121a] border border-[rgba(245,158,11,0.18)] rounded-2xl p-7 ch reveal" style="background: linear-gradient(135deg, rgba(245,158,11,0.05) 0%, rgba(16,18,26,1) 60%);">
+        <div class="flex items-center justify-between mb-5">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center text-black font-bold font-display text-base tracking-wider">JV</div>
+            <div>
+              <div class="font-semibold text-[#c4c8d8] text-sm">Experienced Discord Owner</div>
+              <div class="font-mono text-xs text-[#6b7280]">Verified · 2 months after purchase</div>
+            </div>
+          </div>
+          <div class="text-amber-400 text-sm">★★★★★</div>
+        </div>
+        <p class="text-[#c4c8d8] text-sm leading-relaxed italic mb-4">"As an experienced trader and someone who has run several discord rooms and been a member of just about all of the best rooms — I can say this is the best discord trading room out there. I listen/watch TSDR & Bracco every morning as part of my process to buy in the first 30 minutes while I run my own scans. The combination of their pre-market and live analysis is genuinely invaluable."</p>
+        <div class="inline-flex items-center gap-1.5 bg-[rgba(16,185,129,0.08)] border border-[rgba(16,185,129,0.15)] rounded-full px-3 py-1.5">
+          <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span class="font-mono text-xs text-emerald-400">Whop Verified Purchase</span>
+        </div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal rd1">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 flex items-center justify-center text-white font-bold text-xs font-display tracking-wider">AT</div>
+            <div>
+              <div class="font-semibold text-[#c4c8d8] text-sm">Aspiring Trader</div>
+              <div class="font-mono text-xs text-[#6b7280]">12 days after purchase</div>
+            </div>
+          </div>
+          <div class="text-amber-400 text-sm">★★★★★</div>
+        </div>
+        <p class="text-[#6b7280] text-sm leading-relaxed italic">"If you want to learn how to become a better trader, investor and student of the markets — invest in Uncharted Territory. It's a great way to avoid years of losing money to Mr. Market and become more knowledgeable and self-confident."</p>
+        <div class="mt-4 inline-flex items-center gap-1.5 bg-[rgba(16,185,129,0.08)] border border-[rgba(16,185,129,0.15)] rounded-full px-3 py-1.5">
+          <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span class="font-mono text-xs text-emerald-400">Verified</span>
+        </div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-500 flex items-center justify-center text-white font-bold text-xs font-display tracking-wider">LT</div>
+            <div>
+              <div class="font-semibold text-[#c4c8d8] text-sm">Multi-year Member</div>
+              <div class="font-mono text-xs text-[#6b7280]">2 months after purchase</div>
+            </div>
+          </div>
+          <div class="text-amber-400 text-sm">★★★★★</div>
+        </div>
+        <p class="text-[#6b7280] text-sm leading-relaxed italic">"Joined sometime back and see the drastic difference in my approach and handling of trades. Come here to learn and stay to earn. Thanks Patrick, Bracco, Manrav, 1ChartMaster and Jersace for giving me the best earning year of my life."</p>
+        <div class="mt-4 inline-flex items-center gap-1.5 bg-[rgba(16,185,129,0.08)] border border-[rgba(16,185,129,0.15)] rounded-full px-3 py-1.5">
+          <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span class="font-mono text-xs text-emerald-400">Verified</span>
+        </div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal rd1">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white font-bold text-xs font-display tracking-wider">SR</div>
+            <div>
+              <div class="font-semibold text-[#c4c8d8] text-sm">Experienced Trader</div>
+              <div class="font-mono text-xs text-[#6b7280]">2 years trading</div>
+            </div>
+          </div>
+          <div class="text-amber-400 text-sm">★★★★★</div>
+        </div>
+        <p class="text-[#6b7280] text-sm leading-relaxed italic">"Been in many discords before this one. This group has so much to offer and has helped improve my trading significantly. The contributors have different styles so there is plenty of strategies to figure out what works for you."</p>
+        <div class="mt-4 inline-flex items-center gap-1.5 bg-[rgba(16,185,129,0.08)] border border-[rgba(16,185,129,0.15)] rounded-full px-3 py-1.5">
+          <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span class="font-mono text-xs text-emerald-400">Verified</span>
+        </div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal rd2">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-purple-500 flex items-center justify-center text-white font-bold text-xs font-display tracking-wider">TC</div>
+            <div>
+              <div class="font-semibold text-[#c4c8d8] text-sm">Veteran Trader</div>
+              <div class="font-mono text-xs text-[#6b7280]">8 years trading · 2 years in UT</div>
+            </div>
+          </div>
+          <div class="text-amber-400 text-sm">★★★★★</div>
+        </div>
+        <p class="text-[#6b7280] text-sm leading-relaxed italic">"I've been trading for 8 years and have been a part of many stock groups. None of them even come close to this one. I have learned a lot from TSDR and Bracco. This community is helpful just to make sure you get fresh eyes on the market every single day."</p>
+        <div class="mt-4 inline-flex items-center gap-1.5 bg-[rgba(16,185,129,0.08)] border border-[rgba(16,185,129,0.15)] rounded-full px-3 py-1.5">
+          <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span class="font-mono text-xs text-emerald-400">Verified · 2 yrs</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─────────────────────────────────── -->
+<section class="py-28 border-b border-[#1c1f2e]" id="pricing">
+  <div class="max-w-5xl mx-auto px-6 lg:px-10">
+    <div class="text-center mb-14 reveal">
+      <div class="inline-flex items-center gap-2 bg-[rgba(245,158,11,0.07)] border border-[rgba(245,158,11,0.18)] rounded-full px-4 py-2 mb-6">
+        <span class="font-mono text-xs text-amber-400 tracking-widest uppercase">Membership</span>
+      </div>
+      <h2 class="font-display text-[#eef0f8] tracking-wider mb-4"
+          style="font-size: clamp(2.5rem, 5vw, 4.5rem);">ONE PLAN. EVERYTHING.</h2>
+      <p class="text-[#6b7280] text-lg max-w-xl mx-auto">No tiers. No upsells. One membership — full access to all six trader channels, all sessions, Deepvue AI tools, and every future update.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Main pricing card — takes 2 cols -->
+      <div class="lg:col-span-2 bg-gradient-to-br from-[rgba(245,158,11,0.08)] to-[rgba(16,18,26,1)] border border-[rgba(245,158,11,0.25)] rounded-2xl p-10 ch reveal" style="box-shadow: 0 0 60px rgba(245,158,11,0.07);">
+        <div class="flex items-start justify-between mb-6 flex-wrap gap-4">
+          <div>
+            <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-2">Uncharted Community Access</div>
+            <div class="font-display text-[#eef0f8] text-4xl tracking-wider">FULL ACCESS</div>
+          </div>
+          <div class="text-right">
+            <div class="font-display text-[#eef0f8] text-5xl tracking-wider" style="text-shadow: 0 0 30px rgba(245,158,11,0.3);">$79.99</div>
+            <div class="font-mono text-xs text-[#6b7280] mt-1">per 28 days · Cancel anytime</div>
+          </div>
+        </div>
+
+        <div class="h-px bg-[rgba(245,158,11,0.1)] mb-8"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">Daily pre-market Zoom session</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">Real-time entry & exit alerts</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">Nightly educational workshops</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">Sunday weekly scan & watchlist</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">Deepvue Charting (included free)</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">Deepvue Terminal AI (included free)</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">All 6 trader channels (TSDR, Bracco +)</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">24/7 active community Discord</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">30% affiliate commission</span>
+          </div>
+          <div class="flex gap-2.5 items-start">
+            <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span class="text-[#c4c8d8] text-sm">Cancel anytime via Whop</span>
+          </div>
+        </div>
+
+        <a href="https://whop.com/uncharted/uncharted?a=digitalartlab"
+           class="block text-center bg-amber-500 hover:bg-amber-400 text-black font-bold text-base px-8 py-4 rounded-xl transition-all btn-amber no-underline">
+          🗺️ Join Uncharted Territory — $79.99 / 28 days
+        </a>
+        <p class="text-center text-xs font-mono text-[#6b7280] mt-4">Managed via Whop · Secure checkout · Cancel anytime</p>
+      </div>
+
+      <!-- Promo + affiliate sidebar -->
+      <div class="flex flex-col gap-4 reveal rd1">
+        <!-- Promo code card -->
+        <div class="bg-[#10121a] border border-[rgba(245,158,11,0.18)] rounded-2xl p-7">
+          <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">Promo Code</div>
+          <div class="font-display text-[#eef0f8] text-4xl tracking-wider mb-2">SUBSTACK</div>
+          <div class="text-sm text-[#6b7280] leading-relaxed mb-5">Get <strong class="text-amber-400">15% off forever</strong> — exclusive discount available through the Uncharted Territory Substack newsletter.</div>
+          <div class="bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.15)] rounded-xl px-4 py-3 text-center">
+            <div class="font-mono text-xs text-[#6b7280] mb-1">Enter at checkout</div>
+            <div class="font-display text-amber-400 text-2xl tracking-widest">SUBSTACK</div>
+          </div>
+        </div>
+
+        <!-- Affiliate card -->
+        <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-7 flex-1">
+          <div class="font-mono text-xs text-amber-400 uppercase tracking-widest mb-3">Affiliate Program</div>
+          <div class="font-display text-[#eef0f8] text-5xl tracking-wider mb-2" style="text-shadow: 0 0 20px rgba(245,158,11,0.25);">30%</div>
+          <div class="font-mono text-xs text-[#6b7280] uppercase tracking-widest mb-3">Recurring Commission</div>
+          <div class="text-sm text-[#6b7280] leading-relaxed">Refer members, earn 30% recurring commission. Managed automatically through Whop.</div>
+          <a href="https://whop.com/uncharted?a=digitalartlab"
+             class="inline-flex items-center gap-2 mt-4 text-xs font-mono text-amber-400 hover:text-amber-300 transition-colors no-underline">
+            Start Earning →
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─────────────────────────────────────── -->
+<section class="py-28 border-b border-[#1c1f2e] bg-[#0c0e12]" id="faq">
+  <div class="max-w-4xl mx-auto px-6 lg:px-10">
+    <div class="text-center mb-14 reveal">
+      <h2 class="font-display text-[#eef0f8] tracking-wider mb-3"
+          style="font-size: clamp(2.5rem, 5vw, 4rem);">QUESTIONS ANSWERED</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal">
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider mb-3">Is it just a signals group?</div>
+        <div class="text-[#6b7280] text-sm leading-relaxed">No. Uncharted Territory is education-first. TSDR and Bracco show their full process — not just alerts. You get nightly workshops, daily Zooms, and post-market reviews. The goal is to teach you to trade independently.</div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal rd1">
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider mb-3">What markets are covered?</div>
+        <div class="text-[#6b7280] text-sm leading-relaxed">Primarily US stocks, ETFs, and indices — with a heavy focus on QQQ, IWM, and sector ETFs. TSDR specializes in swing trades on stocks and indices. Bracco is a day trader. Options, crude oil, and futures analysis is also covered regularly.</div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal">
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider mb-3">Can beginners join?</div>
+        <div class="text-[#6b7280] text-sm leading-relaxed">Yes. Bracco and TSDR are described by members as "patient and willing teachers." The daily Zoom, nightly workshops, and active Q&A make the community accessible to traders at all levels — from day-one beginners to 8-year veterans.</div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal rd1">
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider mb-3">What is Deepvue?</div>
+        <div class="text-[#6b7280] text-sm leading-relaxed">Deepvue is a professional trading platform with charting tools and an AI stock market assistant (Deepvue Terminal). Through Uncharted Territory's partnership, every member gets both Deepvue Charting and the Terminal AI included — at no extra cost beyond the membership fee.</div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal">
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider mb-3">What is the promo code?</div>
+        <div class="text-[#6b7280] text-sm leading-relaxed">Use code <strong class="text-amber-400">SUBSTACK</strong> at checkout on Whop for 15% off forever. This discount is available exclusively through the Uncharted Territory Substack newsletter for members who join through that channel.</div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal rd1">
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider mb-3">Can I cancel anytime?</div>
+        <div class="text-[#6b7280] text-sm leading-relaxed">Yes. Membership is managed through Whop and cancels instantly — no penalty, no lock-in. Your access continues for the remaining 28-day billing period. No questions asked.</div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal">
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider mb-3">Is there an affiliate program?</div>
+        <div class="text-[#6b7280] text-sm leading-relaxed">Yes. Uncharted Territory offers a 30% recurring commission on every member you refer. Managed and paid automatically through Whop. No minimum threshold to start earning.</div>
+      </div>
+
+      <div class="bg-[#10121a] border border-[#1c1f2e] rounded-2xl p-6 ch reveal rd1">
+        <div class="font-display text-[#eef0f8] text-lg tracking-wider mb-3">Why 28 days instead of monthly?</div>
+        <div class="text-[#6b7280] text-sm leading-relaxed">The 28-day billing cycle aligns with four full trading weeks — giving you a complete month of market sessions in every billing period regardless of where the calendar falls. It's designed to maximize value per billing period.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FINAL CTA ──────────────────────────────── -->
+<section class="py-36 relative overflow-hidden bg-[#0a0b0e]">
+  <div class="absolute inset-0 terrain-bg"></div>
+  <div class="glow-amber w-[900px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="opacity: 0.8;"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-[#0a0b0e] via-transparent to-[#0a0b0e]"></div>
+
+  <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+    <div class="inline-flex items-center gap-2.5 bg-[rgba(245,158,11,0.08)] border border-[rgba(245,158,11,0.2)] rounded-full px-5 py-2.5 mb-10">
+      <span class="w-2 h-2 rounded-full bg-amber-400 pdot flex-shrink-0"></span>
+      <span class="font-mono text-xs text-amber-400 tracking-widest uppercase">Daily · Live · Real Traders</span>
+    </div>
+
+    <h2 class="font-display text-[#eef0f8] leading-none tracking-wider mb-6"
+        style="font-size: clamp(3rem, 10vw, 9rem);">
+      ENTER THE<br>
+      <span class="text-amber-grad">TERRITORY</span>
+    </h2>
+
+    <p class="text-[#6b7280] text-lg max-w-2xl mx-auto leading-relaxed mb-12">
+      Every morning Bracco and TSDR run a pre-market Zoom without you. Every evening there's a workshop. Every Sunday there's a scan. The map is already drawn — you just need to get in the room.
+    </p>
+
+    <div class="flex flex-wrap gap-4 justify-center mb-12">
+      <a href="https://whop.com/uncharted/uncharted?a=digitalartlab"
+         class="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black font-bold text-lg px-10 py-5 rounded-xl transition-all btn-amber no-underline">
+        🗺️ Join Uncharted Territory
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://whop.com/uncharted?a=digitalartlab"
+         class="inline-flex items-center gap-2 bg-transparent hover:bg-[rgba(255,255,255,0.04)] text-[#eef0f8] font-semibold text-lg px-10 py-5 rounded-xl border border-[#1c1f2e] hover:border-[#252840] transition-all no-underline">
+        View on Whop
+      </a>
+    </div>
+
+    <div class="flex flex-wrap items-center justify-center gap-6 text-sm text-[#6b7280]">
+      <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>$79.99 / 28 days</div>
+      <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Cancel anytime</div>
+      <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Deepvue AI included free</div>
+      <div class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Use SUBSTACK for 15% off</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─────────────────────────────────── -->
+<footer class="bg-[#0a0b0e] border-t border-[#1c1f2e] pt-16 pb-10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+      <div>
+        <div class="flex items-center gap-3 mb-5 no-underline">
+          <div class="w-9 h-9 rounded-lg bg-amber-500 flex items-center justify-center flex-shrink-0">
+            <svg class="w-5 h-5 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          </div>
+          <div>
+            <div class="font-display text-[#eef0f8] text-lg tracking-widest leading-none">UNCHARTED</div>
+            <div class="font-mono text-[9px] text-amber-500 tracking-[0.2em] uppercase leading-none mt-0.5">Territory</div>
+          </div>
+        </div>
+        <p class="text-[#6b7280] text-sm leading-relaxed mb-5 max-w-xs">Daily live trading with Bracco & TSDR. Pre-market Zoom, real-time alerts, nightly workshops, and Deepvue AI tools — all included.</p>
+        <div class="flex gap-2">
+          <a href="https://x.com/Braczyy" class="w-9 h-9 bg-[#10121a] border border-[#1c1f2e] rounded-lg flex items-center justify-center text-[#6b7280] hover:text-amber-400 hover:border-[#252840] transition-all text-sm font-bold no-underline">𝕏</a>
+          <a href="https://x.com/TSDR_Trading" class="w-9 h-9 bg-[#10121a] border border-[#1c1f2e] rounded-lg flex items-center justify-center text-[#6b7280] hover:text-amber-400 hover:border-[#252840] transition-all text-sm font-bold no-underline">𝕏</a>
+          <a href="https://substack.com/@unchartedterritoryy" class="w-9 h-9 bg-[#10121a] border border-[#1c1f2e] rounded-lg flex items-center justify-center text-[#6b7280] hover:text-amber-400 hover:border-[#252840] transition-all text-xs font-bold no-underline">📰</a>
+        </div>
+      </div>
+      <div>
+        <div class="font-mono text-xs text-[#eef0f8] uppercase tracking-widest mb-5">Community</div>
+        <ul class="space-y-3 list-none">
+          <li><a href="https://whop.com/uncharted/uncharted?a=digitalartlab" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">Join — $79.99 / 28 days</a></li>
+          <li><a href="https://whop.com/uncharted?a=digitalartlab" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">Whop Page</a></li>
+          <li><a href="https://substack.com/@unchartedterritoryy" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">Substack Newsletter</a></li>
+          <li><a href="#reviews" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">Reviews</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-mono text-xs text-[#eef0f8] uppercase tracking-widest mb-5">Features</div>
+        <ul class="space-y-3 list-none">
+          <li><a href="#features" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">Pre-Market Zoom</a></li>
+          <li><a href="#features" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">Live Trading Alerts</a></li>
+          <li><a href="#features" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">Nightly Workshops</a></li>
+          <li><a href="#features" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">Deepvue AI Tools</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="font-mono text-xs text-[#eef0f8] uppercase tracking-widest mb-5">The Team</div>
+        <ul class="space-y-3 list-none">
+          <li><a href="https://x.com/Braczyy" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">@Braczyy — Bracco</a></li>
+          <li><a href="https://x.com/TSDR_Trading" class="text-[#6b7280] hover:text-amber-400 text-sm transition-colors no-underline">@TSDR_Trading</a></li>
+          <li><span class="text-[#6b7280] text-sm">Patrick · Manrav</span></li>
+          <li><span class="text-[#6b7280] text-sm">1ChartMaster · Jersace</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-[#1c1f2e] pt-8 flex flex-col md:flex-row justify-between items-start gap-4">
+      <p class="font-mono text-xs text-[#333]">© 2026 Uncharted Territory · All rights reserved.</p>
+      <p class="font-mono text-xs text-[#2a2a2a] max-w-lg leading-relaxed">Risk Disclosure: Trading involves significant risk of loss. Past performance is not indicative of future results. Always trade with capital you can afford to lose. Individual results may vary.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─── HAMBURGER MENU ──────────────────────────────────────
+  const btn = document.getElementById('hamburger-btn');
+  const menu = document.getElementById('mobile-menu');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  btn.addEventListener('click', () => {
+    const isOpen = menu.classList.contains('open');
+    if (isOpen) {
+      menu.classList.remove('open');
+      btn.classList.remove('ham-open');
+      btn.setAttribute('aria-expanded', 'false');
+    } else {
+      menu.classList.add('open');
+      btn.classList.add('ham-open');
+      btn.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  // Close menu on link click
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      btn.classList.remove('ham-open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Close menu on outside click
+  document.addEventListener('click', (e) => {
+    const nav = document.querySelector('nav');
+    if (!nav.contains(e.target)) {
+      menu.classList.remove('open');
+      btn.classList.remove('ham-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // ─── SCROLL REVEAL ──────────────────────────────────────
+  const revealEls = document.querySelectorAll('.reveal');
+  const revObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('vis');
+        revObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -28px 0px' });
+  revealEls.forEach(el => revObs.observe(el));
+
+  // ─── NAV SCROLL EFFECT ───────────────────────────────────
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.boxShadow = window.scrollY > 50
+      ? '0 4px 30px rgba(0,0,0,0.7)'
+      : 'none';
+  });
+
+  // ─── SMOOTH SCROLL ───────────────────────────────────────
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+      const t = document.querySelector(this.getAttribute('href'));
+      if (t) {
+        e.preventDefault();
+        const offset = 70;
+        const top = t.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+</body>
+</html>
