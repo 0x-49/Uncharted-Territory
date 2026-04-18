@@ -1,9 +1,11 @@
+import { ErrorBoundary } from '@/components/ErrorBoundary'
 import Navigation from '@/components/layout/Navigation'
 import Footer from '@/components/layout/Footer'
 import Hero from '@/components/sections/Hero'
 import Ticker from '@/components/sections/Ticker'
 import PainSection from '@/components/sections/PainSection'
 import Features from '@/components/sections/Features'
+import LivePlatform from '@/components/sections/LivePlatform'
 import Team from '@/components/sections/Team'
 import Schedule from '@/components/sections/Schedule'
 import Testimonials from '@/components/sections/Testimonials'
@@ -15,13 +17,14 @@ import FinalCTA from '@/components/sections/FinalCTA'
 
 export default function Home() {
   return (
-    <>
+    <ErrorBoundary>
       <Navigation />
       <main>
         <Hero />
         <Ticker />
         <PainSection />
         <Features />
+        <LivePlatform />
         <Team />
         <Schedule />
         <Testimonials />
@@ -32,6 +35,6 @@ export default function Home() {
         <FinalCTA />
       </main>
       <Footer />
-    </>
+    </ErrorBoundary>
   )
 }
