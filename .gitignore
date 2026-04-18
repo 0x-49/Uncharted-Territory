@@ -6,3 +6,10 @@ dist/
 *.log
 coverage/
 .vscode/
+
+# Next.js build output
+.next/
+out/
+
+# OS files
+Thumbs.db
