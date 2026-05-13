@@ -1,5 +1,6 @@
 'use client'
 import { useRevealOnScroll } from '@/hooks/useRevealOnScroll'
+import { AFFILIATE_LINK } from '@/constants'
 
 export default function Pricing() {
   const sectionRef = useRevealOnScroll()
@@ -30,28 +31,28 @@ export default function Pricing() {
               <span className="text-emerald-400 text-sm font-medium">Save $420+ vs individual coaching</span>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-2">
-              <div className="text-white/40 line-through text-lg">$499/month</div>
+              <div className="text-white/55 line-through text-lg">$499/month</div>
               <div className="font-display text-white text-5xl text-amber-grad">$79.99</div>
             </div>
-            <div className="font-mono text-xs text-white/40">per 28 days - Cancel anytime</div>
+            <div className="font-mono text-xs text-white/55">per 28 days - Cancel anytime</div>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 p-4 bg-white/[0.02] rounded-xl border border-white/5">
             <div className="text-center">
               <div className="font-display text-2xl text-ut-amber">$200</div>
-              <div className="text-xs text-white/40 mt-1">Pre-market Zoom</div>
+              <div className="text-xs text-white/55 mt-1">Pre-market Zoom</div>
             </div>
             <div className="text-center">
               <div className="font-display text-2xl text-ut-amber">$150</div>
-              <div className="text-xs text-white/40 mt-1">Trade Alerts</div>
+              <div className="text-xs text-white/55 mt-1">Trade Alerts</div>
             </div>
             <div className="text-center">
               <div className="font-display text-2xl text-ut-amber">$100</div>
-              <div className="text-xs text-white/40 mt-1">Workshops</div>
+              <div className="text-xs text-white/55 mt-1">Workshops</div>
             </div>
             <div className="text-center">
-              <div className="font-display text-2xl text-ut-amber">$50</div>
-              <div className="text-xs text-white/40 mt-1">Deepvue AI</div>
+              <div className="font-display text-2xl text-ut-amber">$150</div>
+              <div className="text-xs text-white/55 mt-1">Deepvue AI</div>
             </div>
           </div>
 
@@ -82,7 +83,7 @@ export default function Pricing() {
           </div>
 
           <a
-            href="https://whop.com/uncharted/uncharted?a=digitalartlab"
+            href={AFFILIATE_LINK}
             target="_blank"
             rel="noopener noreferrer"
             className="block w-full py-4 rounded-xl bg-ut-amber text-black font-bold text-center hover:bg-ut-ambers transition-colors hover:shadow-[0_0_30px_rgba(245,158,11,0.4)]"
@@ -98,7 +99,7 @@ export default function Pricing() {
             </div>
             <span className="w-px h-3 bg-white/20" />
             <div className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg className="w-4 h-4 text-white/55" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
               <span className="font-mono text-xs text-white/50">Cancel Anytime</span>

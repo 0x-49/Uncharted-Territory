@@ -13,3 +13,7 @@ out/
 
 # OS files
 Thumbs.db
+
+# OG image generator (run locally, output committed)
+generate-og.mjs
+public/og-template.html

@@ -1,8 +1,40 @@
 const trustBadges = [
-  { label: 'Secure Checkout', sublabel: '256-bit SSL' },
-  { label: 'Money-Back', sublabel: '7 Days' },
-  { label: 'Verified Members', sublabel: '5,000+' },
-  { label: 'Cancel Anytime', sublabel: 'No Contracts' },
+  {
+    label: 'Secure Checkout',
+    sublabel: 'Via Whop (256-bit SSL)',
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Money-Back',
+    sublabel: '7-Day Guarantee',
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Active Members',
+    sublabel: 'active Subscribers',
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+    ),
+  },
+  {
+    label: 'Cancel Anytime',
+    sublabel: 'No Long-Term Contracts',
+    icon: (
+      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    ),
+  },
 ]
 
 export default function TrustBadges() {
@@ -11,9 +43,12 @@ export default function TrustBadges() {
       <div className="max-w-4xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {trustBadges.map((badge) => (
-            <div key={badge.label} className="text-center">
+            <div key={badge.label} className="text-center group">
+              <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-center mx-auto mb-3 text-white/55 group-hover:text-ut-amber group-hover:border-ut-amber/20 transition-colors">
+                {badge.icon}
+              </div>
               <div className="font-display text-lg text-white mb-0.5">{badge.label}</div>
-              <div className="text-xs text-white/30">{badge.sublabel}</div>
+              <div className="text-xs text-white/55">{badge.sublabel}</div>
             </div>
           ))}
         </div>

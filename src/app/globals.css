@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap');
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -72,38 +70,18 @@ body::after {
   transform: translateY(-2px);
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
+/* Reveals default to visible — only hidden when JS marks them with .reveal-init */
+.reveal { transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-init.reveal { opacity: 0; transform: translateY(30px); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal-scale { transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-init.reveal-scale { opacity: 0; transform: scale(0.95); }
+.reveal-scale.visible { opacity: 1; transform: scale(1); }
 
-.reveal-scale {
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-scale.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.reveal-left {
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal-left.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
+.reveal-left { transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal-init.reveal-left { opacity: 0; transform: translateX(-30px); }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
 
 .rd1 { transition-delay: 0.08s; }
 .rd2 { transition-delay: 0.16s; }
@@ -207,3 +185,156 @@ a, button {
 html {
   scroll-padding-top: 80px;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ─── Article body prose styles ─────────────────────── */
+.article-body {
+  color: #c4c8d8;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.article-body h2 {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #eef0f8;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.article-body h3 {
+  font-family: var(--font-dm-sans), sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #eef0f8;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.article-body p {
+  margin-bottom: 1.25rem;
+  color: rgba(196, 200, 216, 0.85);
+}
+
+.article-body ul, .article-body ol {
+  margin: 1rem 0 1.5rem 1.5rem;
+  space-y: 0.5rem;
+}
+
+.article-body li {
+  margin-bottom: 0.5rem;
+  color: rgba(196, 200, 216, 0.8);
+  padding-left: 0.25rem;
+}
+
+.article-body ul li {
+  list-style-type: disc;
+}
+
+.article-body ol li {
+  list-style-type: decimal;
+}
+
+.article-body blockquote {
+  border-left: 3px solid #f59e0b;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+  color: rgba(238, 240, 248, 0.8);
+}
+
+.article-body strong {
+  color: #eef0f8;
+  font-weight: 600;
+}
+
+.article-body a {
+  color: #f59e0b;
+  text-decoration: underline;
+  text-decoration-color: rgba(245, 158, 11, 0.4);
+  transition: color 0.2s;
+}
+
+.article-body a:hover {
+  color: #fbbf24;
+  text-decoration-color: #fbbf24;
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0 2rem;
+  font-size: 0.875rem;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.article-body table thead {
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.article-body table th {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  color: #eef0f8;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.article-body table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  color: rgba(196, 200, 216, 0.8);
+}
+
+.article-body table tr:last-child td {
+  border-bottom: none;
+}
+
+.article-body table tr:hover td {
+  background: rgba(255,255,255,0.02);
+}
+
+.article-body .verdict-box {
+  background: rgba(245,158,11,0.07);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.article-body .verdict-box p {
+  margin-bottom: 0;
+}
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin: 2rem 0;
+}
+
+/* No reveal fallback needed — content is visible by default; JS opts in to hide-then-reveal */

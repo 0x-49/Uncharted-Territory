@@ -1,3 +1,6 @@
+'use client'
+import { trackAffiliate } from '@/hooks/useTrackClick'
+
 export default function FinalCTA() {
   return (
     <section className="py-24 md:py-32 relative overflow-hidden">
@@ -18,14 +21,15 @@ export default function FinalCTA() {
         </h2>
 
         <p className="text-base text-white/50 max-w-lg mx-auto mb-10">
-          Join 3,300+ traders mastering the markets. Your journey to consistent profits starts here.
+          Join traders mastering the markets. Your journey to consistent profits starts here.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
-            href="https://whop.com/uncharted?a=digitalartlab"
+            href="https://whop.com/uncharted/uncharted?a=digitalartlab"
             target="_blank"
             rel="noopener noreferrer"
+            onClick={trackAffiliate('final_cta')}
             className="group relative px-10 py-5 bg-ut-amber text-black font-bold rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-[0_0_60px_rgba(245,158,11,0.5)]"
           >
             <span className="absolute inset-0 bg-gradient-to-r from-ut-amber via-ut-amberl to-ut-amberd opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -37,7 +41,7 @@ export default function FinalCTA() {
             </span>
           </a>
           <a
-            href="https://whop.com/uncharted?a=digitalartlab"
+            href="https://whop.com/uncharted/uncharted?a=digitalartlab"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-5 rounded-xl font-medium border-2 border-white/20 text-white/70 hover:text-white hover:border-ut-amber/50 hover:bg-ut-amber/5 transition-all text-lg"
@@ -46,7 +50,7 @@ export default function FinalCTA() {
           </a>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-white/40">
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-sm text-white/55">
           <span className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
               <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
