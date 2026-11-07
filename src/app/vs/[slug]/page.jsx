@@ -11,7 +11,7 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }) {
   const cmp = getComparison(params.slug)
-  if (!cmp) return { title: 'Comparison not found | Uncharted Territory' }
+  if (!cmp) return { title: 'Comparison not found | JoinUnchartedTerritory (independent guide)' }
   const url = `https://joinunchartedterritory.com/vs/${cmp.slug}`
   return {
     title: cmp.metaTitle,

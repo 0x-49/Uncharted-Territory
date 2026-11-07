@@ -65,7 +65,7 @@ export default function Hero() {
             className="block text-[clamp(0.75rem,1.8vw,1rem)] font-medium text-white/55 tracking-[0.35em] uppercase mt-3"
             style={{ fontFamily: 'var(--font-dm-sans)', letterSpacing: '0.35em' }}
           >
-            Trading Community
+            Trading Community: An Independent Review
           </span>
         </h1>
 
@@ -106,6 +106,7 @@ export default function Hero() {
             See How It Works
           </a>
         </div>
+        <p className="-mt-8 mb-10 text-xs text-white/50">Affiliate link: we may earn a commission at no extra cost to you. Uncharted Territory sells its own membership on Whop.</p>
 
         <div className="reveal animate-slide-up animate-delay-400 flex flex-col items-center gap-4">
           <div className="flex flex-wrap items-center justify-center gap-5 md:gap-6 text-xs text-white/55">

@@ -47,16 +47,17 @@ export const metadata = {
     'Uncharted Territory Whop',
   ],
   metadataBase: new URL('https://joinunchartedterritory.com'),
-  authors: [{ name: 'Max', url: 'https://joinunchartedterritory.com' }],
-  creator: 'Max',
+  authors: [{ name: 'Max Yao', url: 'https://joinunchartedterritory.com' }],
+  creator: 'Max Yao',
+  publisher: 'Software Automated Ltd',
   alternates: {
     canonical: './',
   },
   openGraph: {
     title: 'Uncharted Territory | Trading Community, 5.0★ Rated',
-    description: 'Daily pre-market Zoom, live alerts from 6 expert traders, nightly workshops & Deepvue AI free. members of our active community. 7-day guarantee.',
+    description: 'Daily pre-market Zoom, live alerts from 6 expert traders, nightly workshops & Deepvue AI free. members in its active community. 7-day guarantee.',
     url: './',
-    siteName: 'Uncharted Territory',
+    siteName: 'JoinUnchartedTerritory (independent guide)',
     locale: 'en_US',
     type: 'website',
     images: [
@@ -71,8 +72,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Uncharted Territory | Trading Community',
-    description: 'Daily pre-market Zoom, live trade alerts from 6 experts, nightly workshops. members of our active community. 5.0★ on Whop.',
-    creator: '@Braczyy',
+    description: 'Daily pre-market Zoom, live trade alerts from 6 experts, nightly workshops. members in its active community. 5.0★ on Whop.',
     images: ['https://joinunchartedterritory.com/og-image.png'],
   },
   robots: {
@@ -93,72 +93,26 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const schemas = [
     {
+      // Independent affiliate guide run by Software Automated Ltd. Uncharted Territory and its founders are the subject
+      // (about), never this site's publisher/founder, and no ratings are claimed (Whop: don't represent yourself as the Seller).
       '@context': 'https://schema.org',
-      '@type': 'Service',
-      name: 'Uncharted Territory Trading Community',
-      description: 'Daily pre-market Zoom sessions, real-time trade alerts from 6 expert traders, nightly educational workshops, and Deepvue AI tools for serious traders of all levels.',
-      url: 'https://joinunchartedterritory.com',
-      provider: {
-        '@type': 'Organization',
-        name: 'Uncharted Territory',
-        url: 'https://joinunchartedterritory.com',
-        logo: { '@type': 'ImageObject', url: 'https://joinunchartedterritory.com/icon.avif' },
-        foundingDate: '2022',
-        sameAs: ['https://x.com/Braczyy', 'https://x.com/TSDR_Trading'],
-        founder: [
-          { '@type': 'Person', name: 'Bracco', jobTitle: 'Co-Founder, Day Trader', sameAs: 'https://x.com/Braczyy' },
-          { '@type': 'Person', name: 'TSDR', jobTitle: 'Co-Founder, Swing Trader', sameAs: 'https://x.com/TSDR_Trading' },
-        ],
-      },
-      offers: {
-        '@type': 'Offer',
-        price: '79.99',
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        url: 'https://whop.com/uncharted/uncharted?a=digitalartlab',
-        priceSpecification: {
-          '@type': 'UnitPriceSpecification',
-          price: '79.99',
-          priceCurrency: 'USD',
-          billingDuration: 'P28D',
-          description: '28-day recurring membership, cancel anytime',
-        },
-      },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5.0',
-        reviewCount: '162',
-        bestRating: '5',
-        worstRating: '1',
-      },
-      review: [
+      '@graph': [
         {
-          '@type': 'Review',
-          reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-          author: { '@type': 'Person', name: 'Verified Whop Member' },
-          reviewBody: "You'll learn more in this room in a few days than you will in a year in 99% of other trading rooms. They teach you how to fish each and every day on Zoom for hours with live examples and constant chart reviews.",
-          datePublished: '2025-06-01',
+          '@type': 'WebSite',
+          '@id': 'https://joinunchartedterritory.com/#website',
+          url: 'https://joinunchartedterritory.com/',
+          name: 'JoinUnchartedTerritory (independent guide)',
+          description: 'Independent review of Uncharted Territory, a trading community on Whop. Not run by or affiliated with Uncharted Territory; links to Whop are affiliate links.',
+          publisher: { '@id': 'https://joinunchartedterritory.com/#publisher' },
+          about: { '@id': 'https://joinunchartedterritory.com/#subject' },
         },
+        { '@type': 'Organization', '@id': 'https://joinunchartedterritory.com/#publisher', name: 'Software Automated Ltd', url: 'https://joinunchartedterritory.com/' },
         {
-          '@type': 'Review',
-          reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-          author: { '@type': 'Person', name: 'Member since September 2025' },
-          reviewBody: "I joined UCT in September 2025 as someone relatively new to trading, and it's been one of the best decisions I've made on my journey so far. UCT stood out for its transparency, professionalism, and the genuine willingness of experienced traders to share.",
-          datePublished: '2025-09-15',
-        },
-        {
-          '@type': 'Review',
-          reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-          author: { '@type': 'Person', name: '2-Year Member' },
-          reviewBody: 'Uncharted has been an absolute game changer for my trading. The education provided from daily live trading, watch list sessions, and trade reviews is second to none.',
-          datePublished: '2024-03-01',
-        },
-        {
-          '@type': 'Review',
-          reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-          author: { '@type': 'Person', name: 'Long-term Member' },
-          reviewBody: 'I tried many trading groups and it was obvious that I found my people when I saw how TSDR and Bracco talk on Zoom and the awesome vibe in the chats. Best trading group I have ever been to.',
-          datePublished: '2024-08-01',
+          '@type': 'Organization',
+          '@id': 'https://joinunchartedterritory.com/#subject',
+          name: 'Uncharted Territory',
+          description: 'Trading community run by Bracco and TSDR, sold on Whop. Subject of this independent review.',
+          sameAs: ['https://whop.com/uncharted/', 'https://x.com/Braczyy', 'https://x.com/TSDR_Trading'],
         },
       ],
     },
@@ -169,12 +123,12 @@ export default function RootLayout({ children }) {
         {
           '@type': 'Question',
           name: 'What is included in the Uncharted Territory membership?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Your membership includes daily pre-market Zoom sessions (7:30 AM ET, Monday–Friday), real-time trade alerts from 6 expert traders with full reasoning, nightly educational workshops (50+ per month), Sunday weekly market scan (free always), 1 month of Deepvue AI platform access, and the active community Discord with members of our active community.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Your membership includes daily pre-market Zoom sessions (7:30 AM ET, Monday–Friday), real-time trade alerts from 6 expert traders with full reasoning, nightly educational workshops (50+ per month), Sunday weekly market scan (free always), 1 month of Deepvue AI platform access, and the community Discord.' },
         },
         {
           '@type': 'Question',
           name: 'Is Uncharted Territory legit?',
-          acceptedAnswer: { '@type': 'Answer', text: 'Uncharted Territory has been operating since 2022 with our active member base and a 5.0-star rating from 162 verified reviews on Whop. The founders are active traders who trade alongside members daily.' },
+          acceptedAnswer: { '@type': 'Answer', text: 'Uncharted Territory has been operating since 2022 with an active member base and a 5.0-star rating from 162 verified reviews on Whop. The founders are active traders who trade alongside members daily.' },
         },
         {
           '@type': 'Question',
@@ -200,15 +154,9 @@ export default function RootLayout({ children }) {
     },
     {
       '@context': 'https://schema.org',
-      '@type': 'WebSite',
-      name: 'Uncharted Territory',
-      url: 'https://joinunchartedterritory.com',
-    },
-    {
-      '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Uncharted Territory', item: 'https://joinunchartedterritory.com' },
+        { '@type': 'ListItem', position: 1, name: 'JoinUnchartedTerritory', item: 'https://joinunchartedterritory.com' },
       ],
     },
   ]
@@ -229,6 +177,10 @@ export default function RootLayout({ children }) {
         ))}
       </head>
       <body>
+        <div style={{ position: 'relative', zIndex: 60, background: '#111318', borderBottom: '1px solid rgba(245,158,11,0.2)', padding: '8px 16px', textAlign: 'center', fontSize: '12px', color: 'rgba(255,255,255,0.75)' }}>
+          Independent guide, not run by or affiliated with Uncharted Territory. Links to Whop are affiliate links: we may earn a commission at no extra cost to you.{' '}
+          <a href="/#disclosure" style={{ color: '#f59e0b', textDecoration: 'underline' }}>How this works</a>
+        </div>
         {children}
         {GA_ID && GA_ID !== 'G-XXXXXXXXXX' && (
           <>

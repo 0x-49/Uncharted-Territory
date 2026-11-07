@@ -12,7 +12,7 @@ export function generateMetadata({ params }) {
   const post = getPostBySlug(params.slug)
   if (!post) return {}
   return {
-    title: `${post.title} | Uncharted Territory`,
+    title: `${post.title} | JoinUnchartedTerritory (independent guide)`,
     description: post.description,
     keywords: post.keywords,
     alternates: { canonical: `https://joinunchartedterritory.com/blog/${post.slug}` },
@@ -189,14 +189,11 @@ export default function BlogPostPage({ params }) {
     dateModified: post.date,
     author: {
       "@type": "Person",
-      name: post.author || "Max",
+      name: post.author || "Max Yao",
       url: "https://joinunchartedterritory.com",
     },
-    publisher: {
-      "@type": "Organization",
-      name: "Uncharted Territory",
-      logo: { "@type": "ImageObject", url: "https://joinunchartedterritory.com/icon.avif" },
-    },
+    publisher: { "@type": "Organization", name: "Software Automated Ltd" },
+    about: { "@type": "Organization", name: "Uncharted Territory", sameAs: ["https://whop.com/uncharted/"] },
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://joinunchartedterritory.com/blog/${post.slug}`,

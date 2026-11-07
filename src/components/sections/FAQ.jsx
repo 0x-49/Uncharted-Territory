@@ -5,7 +5,7 @@ const faqs = [
   },
   {
     question: 'Is Uncharted Territory legit?',
-    answer: 'Uncharted Territory has been operating since 2022 with our active member base and a 5.0-star rating from 162 verified reviews on Whop. The founders, Bracco and TSDR, are active traders who trade alongside members daily, not just instructors. You can read every review directly on Whop before buying.',
+    answer: 'Uncharted Territory has been operating since 2022 with an active member base and a 5.0-star rating from 162 verified reviews on Whop. The founders, Bracco and TSDR, are active traders who trade alongside members daily, not just instructors. You can read every review directly on Whop before buying.',
   },
   {
     question: 'Is there a free trial?',

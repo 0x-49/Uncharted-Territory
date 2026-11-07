@@ -31,7 +31,7 @@ export default function PainSection() {
             <div className="space-y-4">
               {[
                 { title: 'Random signals with no explanation', desc: 'You enter, you don\'t know why. You exit, you don\'t know why. Bracco and TSDR show their full process - live, every session.' },
-                { title: 'No pre-market preparation', desc: 'Walking into the open blind destroys accounts. We start every day with a pre-market Zoom - levels, ideas, and watchlist before the bell.' },
+                { title: 'No pre-market preparation', desc: 'Walking into the open blind destroys accounts. Uncharted Territory starts every day with a pre-market Zoom - levels, ideas, and watchlist before the bell.' },
                 { title: 'One style, one strategy', desc: 'Most groups have one trader and one style. UT has six experts - day traders, swing traders, scalpers - so you find what fits you.' },
               ].map((item, i) => (
                 <div key={i} className="group flex gap-4 p-5 rounded-xl bg-red-500/5 border border-red-500/10 hover:border-red-500/30 transition-all duration-300 items-start">

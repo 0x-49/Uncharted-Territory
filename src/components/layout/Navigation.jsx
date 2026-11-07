@@ -28,14 +28,14 @@ export default function Navigation() {
   }
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'py-3 bg-ut-bg/90 backdrop-blur-xl border-b border-white/5' : 'py-5 bg-transparent'}`}>
+    <nav className={`sticky top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'py-3 bg-ut-bg/90 backdrop-blur-xl border-b border-white/5' : 'py-5 bg-transparent'}`}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="flex items-center justify-between">
           <a href="/" className="group flex items-center gap-3">
             <img src="/icon.avif" alt="Uncharted Territory" className="w-9 h-9 rounded-lg object-contain" />
             <div className="flex flex-col">
               <span className="font-display text-lg tracking-widest text-white leading-none">UNCHARTED</span>
-              <span className="font-mono text-[9px] tracking-[0.3em] text-white/55 -mt-0.5">Territory</span>
+              <span className="font-mono text-[9px] tracking-[0.3em] text-white/55 -mt-0.5">Territory · independent review</span>
             </div>
           </a>
 

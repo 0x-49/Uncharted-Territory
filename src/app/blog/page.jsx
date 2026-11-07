@@ -2,13 +2,13 @@ import Link from 'next/link'
 import { posts, categories } from '@/data/posts'
 
 export const metadata = {
-  title: 'Trading Education Blog | Uncharted Territory',
+  title: 'Trading Education Blog | JoinUnchartedTerritory (independent guide)',
   description: 'In-depth trading education articles, community reviews, comparisons, and guides, written for traders who want real insight, not hype.',
   alternates: {
     canonical: 'https://joinunchartedterritory.com/blog',
   },
   openGraph: {
-    title: 'Trading Education Blog | Uncharted Territory',
+    title: 'Trading Education Blog | JoinUnchartedTerritory (independent guide)',
     description: 'In-depth trading education articles, community reviews, comparisons, and guides, written for traders who want real insight, not hype.',
     url: 'https://joinunchartedterritory.com/blog',
     type: 'website',

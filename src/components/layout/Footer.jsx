@@ -143,11 +143,11 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/5 mt-12 pt-8 space-y-4">
-          <p className="text-white/50 text-xs leading-relaxed">
+          <p id="disclosure" className="text-white/50 text-xs leading-relaxed">
             <span className="text-white/55 font-medium">Affiliate Disclosure:</span> This site contains affiliate links. If you click a link and purchase a membership, we may earn a commission at no extra cost to you. We only recommend products we have thoroughly researched and believe provide genuine value. All opinions expressed are our own.
           </p>
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-            <p className="text-white/50 text-xs">© 2026 Uncharted Territory Review. All rights reserved.</p>
+            <p className="text-white/50 text-xs">© 2026 Software Automated Ltd. Independent review, not run by or affiliated with Uncharted Territory.</p>
             <p className="text-white/50 text-xs md:text-right">
               Risk Disclosure: Trading involves substantial risk. Past performance is not indicative of future results.
             </p>
