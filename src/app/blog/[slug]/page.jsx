@@ -15,16 +15,16 @@ export function generateMetadata({ params }) {
     title: `${post.title} | Uncharted Territory`,
     description: post.description,
     keywords: post.keywords,
-    alternates: { canonical: `https://unchartedterritory.com/blog/${post.slug}` },
+    alternates: { canonical: `https://joinunchartedterritory.com/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
       type: "article",
-      url: `https://unchartedterritory.com/blog/${post.slug}`,
+      url: `https://joinunchartedterritory.com/blog/${post.slug}`,
       publishedTime: post.date,
       images: [
         {
-          url: "https://unchartedterritory.com/og-image.png",
+          url: "https://joinunchartedterritory.com/og-image.png",
           width: 1200,
           height: 630,
           alt: post.title,
@@ -190,16 +190,16 @@ export default function BlogPostPage({ params }) {
     author: {
       "@type": "Person",
       name: post.author || "Max",
-      url: "https://unchartedterritory.com",
+      url: "https://joinunchartedterritory.com",
     },
     publisher: {
       "@type": "Organization",
       name: "Uncharted Territory",
-      logo: { "@type": "ImageObject", url: "https://unchartedterritory.com/icon.avif" },
+      logo: { "@type": "ImageObject", url: "https://joinunchartedterritory.com/icon.avif" },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://unchartedterritory.com/blog/${post.slug}`,
+      "@id": `https://joinunchartedterritory.com/blog/${post.slug}`,
     },
     keywords: post.keywords ? post.keywords.join(", ") : "",
   })
@@ -208,13 +208,13 @@ export default function BlogPostPage({ params }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://unchartedterritory.com" },
-      { "@type": "ListItem", position: 2, name: "Blog", item: "https://unchartedterritory.com/blog" },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://joinunchartedterritory.com" },
+      { "@type": "ListItem", position: 2, name: "Blog", item: "https://joinunchartedterritory.com/blog" },
       {
         "@type": "ListItem",
         position: 3,
         name: post.title,
-        item: `https://unchartedterritory.com/blog/${post.slug}`,
+        item: `https://joinunchartedterritory.com/blog/${post.slug}`,
       },
     ],
   })

@@ -46,21 +46,22 @@ export const metadata = {
     'Uncharted Territory review',
     'Uncharted Territory Whop',
   ],
-  authors: [{ name: 'Max', url: 'https://unchartedterritory.com' }],
+  metadataBase: new URL('https://joinunchartedterritory.com'),
+  authors: [{ name: 'Max', url: 'https://joinunchartedterritory.com' }],
   creator: 'Max',
   alternates: {
-    canonical: 'https://unchartedterritory.com',
+    canonical: './',
   },
   openGraph: {
     title: 'Uncharted Territory | Trading Community, 5.0★ Rated',
     description: 'Daily pre-market Zoom, live alerts from 6 expert traders, nightly workshops & Deepvue AI free. members of our active community. 7-day guarantee.',
-    url: 'https://unchartedterritory.com',
+    url: './',
     siteName: 'Uncharted Territory',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: 'https://unchartedterritory.com/og-image.png',
+        url: 'https://joinunchartedterritory.com/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Uncharted Territory, Trading Community with daily pre-market Zoom, live alerts, and expert workshops. 5.0★ on Whop.',
@@ -72,7 +73,7 @@ export const metadata = {
     title: 'Uncharted Territory | Trading Community',
     description: 'Daily pre-market Zoom, live trade alerts from 6 experts, nightly workshops. members of our active community. 5.0★ on Whop.',
     creator: '@Braczyy',
-    images: ['https://unchartedterritory.com/og-image.png'],
+    images: ['https://joinunchartedterritory.com/og-image.png'],
   },
   robots: {
     index: true,
@@ -96,12 +97,12 @@ export default function RootLayout({ children }) {
       '@type': 'Service',
       name: 'Uncharted Territory Trading Community',
       description: 'Daily pre-market Zoom sessions, real-time trade alerts from 6 expert traders, nightly educational workshops, and Deepvue AI tools for serious traders of all levels.',
-      url: 'https://unchartedterritory.com',
+      url: 'https://joinunchartedterritory.com',
       provider: {
         '@type': 'Organization',
         name: 'Uncharted Territory',
-        url: 'https://unchartedterritory.com',
-        logo: { '@type': 'ImageObject', url: 'https://unchartedterritory.com/icon.avif' },
+        url: 'https://joinunchartedterritory.com',
+        logo: { '@type': 'ImageObject', url: 'https://joinunchartedterritory.com/icon.avif' },
         foundingDate: '2022',
         sameAs: ['https://x.com/Braczyy', 'https://x.com/TSDR_Trading'],
         founder: [
@@ -201,13 +202,13 @@ export default function RootLayout({ children }) {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       name: 'Uncharted Territory',
-      url: 'https://unchartedterritory.com',
+      url: 'https://joinunchartedterritory.com',
     },
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Uncharted Territory', item: 'https://unchartedterritory.com' },
+        { '@type': 'ListItem', position: 1, name: 'Uncharted Territory', item: 'https://joinunchartedterritory.com' },
       ],
     },
   ]

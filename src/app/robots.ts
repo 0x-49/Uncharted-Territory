@@ -21,7 +21,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://unchartedterritory.com/sitemap.xml',
-    host: 'https://unchartedterritory.com',
+    sitemap: 'https://joinunchartedterritory.com/sitemap.xml',
+    host: 'https://joinunchartedterritory.com',
   }
 }

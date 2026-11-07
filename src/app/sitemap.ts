@@ -16,7 +16,7 @@ const blogSlugs = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const blogPages: MetadataRoute.Sitemap = blogSlugs.map(({ slug, date }) => ({
-    url: `https://unchartedterritory.com/blog/${slug}`,
+    url: `https://joinunchartedterritory.com/blog/${slug}`,
     lastModified: new Date(date),
     changeFrequency: 'monthly',
     priority: slug === 'uncharted-territory-review' ? 0.9 : 0.8,
@@ -24,31 +24,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: 'https://unchartedterritory.com',
+      url: 'https://joinunchartedterritory.com',
       lastModified: new Date('2026-04-26'),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://unchartedterritory.com/blog',
+      url: 'https://joinunchartedterritory.com/blog',
       lastModified: new Date('2026-04-26'),
       changeFrequency: 'weekly',
       priority: 0.9,
     },
     {
-      url: 'https://unchartedterritory.com/glossary',
+      url: 'https://joinunchartedterritory.com/glossary',
       lastModified: new Date('2026-04-26'),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: 'https://unchartedterritory.com/vs/warrior-trading',
+      url: 'https://joinunchartedterritory.com/vs/warrior-trading',
       lastModified: new Date('2026-04-29'),
       changeFrequency: 'monthly',
       priority: 0.85,
     },
     {
-      url: 'https://unchartedterritory.com/vs/bear-bull-traders',
+      url: 'https://joinunchartedterritory.com/vs/bear-bull-traders',
       lastModified: new Date('2026-04-29'),
       changeFrequency: 'monthly',
       priority: 0.85,

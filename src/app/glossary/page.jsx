@@ -3,13 +3,13 @@ export const metadata = {
   description:
     'A comprehensive A-Z trading glossary covering basic, technical, options, and community terms. Definitions written for active traders, from beginner to advanced.',
   alternates: {
-    canonical: 'https://unchartedterritory.com/glossary',
+    canonical: 'https://joinunchartedterritory.com/glossary',
   },
   openGraph: {
     title: 'Trading Glossary: 40+ Essential Terms Explained | Uncharted Territory',
     description:
       'Comprehensive A-Z glossary of trading terms, technical analysis, options, risk management, and more. Learn the language of professional trading.',
-    url: 'https://unchartedterritory.com/glossary',
+    url: 'https://joinunchartedterritory.com/glossary',
     siteName: 'Uncharted Territory',
     type: 'website',
   },

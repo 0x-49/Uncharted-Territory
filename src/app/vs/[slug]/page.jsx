@@ -12,7 +12,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const cmp = getComparison(params.slug)
   if (!cmp) return { title: 'Comparison not found | Uncharted Territory' }
-  const url = `https://unchartedterritory.com/vs/${cmp.slug}`
+  const url = `https://joinunchartedterritory.com/vs/${cmp.slug}`
   return {
     title: cmp.metaTitle,
     description: cmp.metaDescription,
@@ -22,13 +22,13 @@ export function generateMetadata({ params }) {
       url,
       title: cmp.metaTitle,
       description: cmp.metaDescription,
-      images: ['https://unchartedterritory.com/og-image.png'],
+      images: ['https://joinunchartedterritory.com/og-image.png'],
     },
     twitter: {
       card: 'summary_large_image',
       title: cmp.metaTitle,
       description: cmp.metaDescription,
-      images: ['https://unchartedterritory.com/og-image.png'],
+      images: ['https://joinunchartedterritory.com/og-image.png'],
     },
   }
 }
